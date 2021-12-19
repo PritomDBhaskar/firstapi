@@ -1,5 +1,6 @@
 const itemRow = document.querySelector(".item-row");
 itemRow.classList.add("justify-content-around");
+
 const data = fetch("https://jsonplaceholder.typicode.com/todos")
   .then((data) => data.json())
   .then((data) => {
@@ -33,37 +34,17 @@ const data = fetch("https://jsonplaceholder.typicode.com/todos")
   });
 
 const search = document.querySelector(".form-control");
-
-document.addEventListener("keyup", (e) => {
-  if (e.keyCode == 13) {
-    let searchValue = search.value.toLowerCase();
-    console.log(searchValue);
-    let titleArr = [];
+search.addEventListener("keyup", (e) => {
+  if (e.keyCode === 13) {
+    let searchText = search.value;
+    console.log(searchText);
     const data = fetch("https://jsonplaceholder.typicode.com/todos")
       .then((data) => data.json())
-      .then((data) => {
-        data.map((item) => {
-          titleArr.push(item.title);
-        });
-        for (let i = 0; i < titleArr.length; i++) {
-          if (titleArr[i].toLowerCase().indexOf(searchValue) > -1) {
-            console.log(titleArr[i]);
-          }
-        }
-      });
+      .then((data) =>
+        data.filter((item) => {
+          return item.title.startsWith(searchText);
+        })
+      );
+    console.log(item);
   }
 });
-
-console.log(data);
-// let str1 = "Pritom";
-// let str2 = "Pritom";
-
-// let str1Split = str1.split("");
-// let str2Split = str2.split("");
-// for (let i = 0; i < str1Split.length; i++) {
-//   if (str1Split[i] == str2Split[i]) {
-//     console.log(str1Split[i]);
-//   }
-// }
-
-// console.log(data.map((item) => item.title));
