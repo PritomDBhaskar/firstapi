@@ -5,13 +5,16 @@ const data = fetch("https://jsonplaceholder.typicode.com/todos")
   .then((data) => data.json())
   .then((data) => {
     data.map((item) => {
+      const colDiv = document.createElement("div");
+      colDiv.classList.add("col-md-4", "text-center");
       const card = document.createElement("div");
-      card.classList.add("card", "col-md-3", "m-4");
+      card.classList.add("card", "m-4");
 
       const cardBody = document.createElement("div");
+      cardBody.classList.add("card-body");
 
       const cardTitle = document.createElement("h5");
-      cardTitle.classList.add("card-title", "m-3", "d-flex");
+      cardTitle.classList.add("card-title", "m-3");
       cardTitle.innerText = item.title;
 
       const cardSubTitle = document.createElement("h6");
@@ -24,54 +27,12 @@ const data = fetch("https://jsonplaceholder.typicode.com/todos")
       cardSubTitle.innerText = item.id;
 
       const cardText = document.createElement("p");
-      cardText.classList.add("card-text", "m-3", "text-center");
+      cardText.classList.add("card-text", "m-3");
       cardText.innerText = item.completed;
 
       cardBody.append(cardTitle, cardSubTitle, cardText);
       card.appendChild(cardBody);
-      itemRow.appendChild(card);
+      colDiv.appendChild(card);
+      itemRow.appendChild(colDiv);
     });
   });
-
-const search = document.querySelector(".form-control");
-search.addEventListener("keyup", (e) => {
-  if (e.keyCode === 13) {
-    let searchText = search.value;
-    console.log(searchText);
-    const data = fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((data) => data.json())
-      .then((data) => {
-        const newData = data.filter((item) => {
-          return item.title.toLowerCase().startsWith(searchText);
-        });
-
-        newData.map((item) => {
-          const card = document.createElement("div");
-          card.classList.add("card", "col-md-3", "m-4");
-
-          const cardBody = document.createElement("div");
-
-          const cardTitle = document.createElement("h5");
-          cardTitle.classList.add("card-title", "m-3", "d-flex");
-          cardTitle.innerText = item.title;
-
-          const cardSubTitle = document.createElement("h6");
-          cardSubTitle.classList.add(
-            "card-subtitle",
-            "m-3",
-            "text-muted",
-            "text-center"
-          );
-          cardSubTitle.innerText = item.id;
-
-          const cardText = document.createElement("p");
-          cardText.classList.add("card-text", "m-3", "text-center");
-          cardText.innerText = item.completed;
-
-          cardBody.append(cardTitle, cardSubTitle, cardText);
-          card.appendChild(cardBody);
-          itemRow.appendChild(card);
-        });
-      });
-  }
-});
